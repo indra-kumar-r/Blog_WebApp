@@ -3,13 +3,16 @@ import { Navigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import GoBackBtn from "./utilities/GoBackBtn";
 
 const EditPost = () => {
   let { id } = useParams();
   let [title, setTitle] = useState("");
   let [summary, setSummary] = useState("");
   let [content, setContent] = useState("");
-  let [imgCover, setImgCover] = useState("");
+  let [imgCover, setImgCover] = useState(
+    "https://www.tgsin.in/images/joomlart/demo/default.jpg"
+  );
   let [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
@@ -22,10 +25,6 @@ const EditPost = () => {
         setImgCover(postData.cover);
       });
   }, []);
-
-  let handleClose = () => {
-    history.back();
-  };
 
   async function updatePost(e) {
     e.preventDefault();
@@ -43,6 +42,7 @@ const EditPost = () => {
     });
     if (response.ok) {
       alert("Post Updated Successfully.");
+      setRedirect(true);
     } else {
       alert("Failed updating the Post.");
     }
@@ -71,8 +71,11 @@ const EditPost = () => {
   return (
     <>
       <Form onSubmit={updatePost}>
+        <div className="formBtns">
+          <GoBackBtn />
+        </div>
         <Img>
-          <img className="imgData" src={`${imgCover}`} alt="123" />
+          <img className="imgData" src={`${imgCover}`} />
         </Img>
         <input
           type="text"
@@ -106,11 +109,14 @@ const EditPost = () => {
           required
         />
         <div className="btns">
-          <button type="button" onClick={handleClose}>
-            CLOSE
+          <button className="btn btn-warning fw-bold" type="submit">
+            UPDATE POST
           </button>
-          <button type="submit">UPDATE POST</button>
-          <button type="button" onClick={() => deletePost(id)}>
+          <button
+            className="btn btn-danger fw-bold"
+            type="button"
+            onClick={() => deletePost(id)}
+          >
             DELETE
           </button>
         </div>
@@ -134,9 +140,10 @@ let Img = styled.div`
 `;
 
 let Form = styled.form`
+  margin-top: 7.5rem;
   width: 60%;
   max-height: 35rem;
-  box-shadow: 0 0 0.5rem violet;
+  box-shadow: 0 0 0.25rem black;
   padding: 1rem 2rem;
   border-radius: 0.25rem;
   display: flex;
@@ -145,6 +152,10 @@ let Form = styled.form`
   gap: 1rem;
   overflow: hidden;
   overflow-y: auto;
+
+  .formBtns {
+    width: 100%;
+  }
 
   input {
     width: 100%;
@@ -166,24 +177,5 @@ let Form = styled.form`
   .btns {
     display: flex;
     gap: 0.5rem;
-  }
-
-  button {
-    padding: 0.75rem 1.75rem;
-    border: none;
-    outline: none;
-    border-radius: 0.25rem;
-    background-color: #39ef88;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 0.25rem;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-
-    &:hover,
-    &:focus {
-      background-color: #36f88a;
-    }
   }
 `;

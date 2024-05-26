@@ -118,8 +118,8 @@ module.exports.u_post = async (req, res) => {
 
 module.exports.d_post = async (req, res) => {
   try {
-    let id = req.params.id;
-    await Posts.findByIdAndDelete(id);
+    let { id } = req.params;
+    await Posts.deleteOne({ _id: id });
     res.status(200).json({ message: "Post deleted successfully." });
   } catch (error) {
     console.error("Error deleting post:", error);

@@ -5,11 +5,8 @@ const UserProfile = () => {
     <>
       <Wrapper>
         <div className="sectionOne">
-          <div>
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-              alt=""
-            />
+          <div className="profileImage">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" />
           </div>
           <div>INDRA KUMAR R</div>
         </div>
@@ -23,6 +20,7 @@ const UserProfile = () => {
 export default UserProfile;
 
 let Wrapper = styled.div`
+  margin-top: 7.5rem;
   width: 60%;
   height: 35rem;
   display: grid;
@@ -31,7 +29,7 @@ let Wrapper = styled.div`
   gap: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  box-shadow: -0.2rem 0.2rem 0.15rem 0 violet;
+  box-shadow: 0 0 0.25rem black;
 
   .sectionOne {
     width: 100%;
@@ -39,6 +37,23 @@ let Wrapper = styled.div`
     grid-row: 1 / span 3;
     background-color: red;
     overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    .profileImage {
+      background-color: lime;
+      width: 100%;
+      height: 50%;
+      overflow: hidden;
+      padding: 0.5rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
   .sectionTwo {

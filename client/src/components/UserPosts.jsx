@@ -58,6 +58,7 @@ const UserPosts = () => {
 export default UserPosts;
 
 let PostCards = styled.div`
+  margin-top: 7.5rem;
   width: 60%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(calc(30% - 1rem), 1fr));

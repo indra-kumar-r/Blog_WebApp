@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Posts from "./Posts";
 import { UserContext } from "./UserContext";
+import styled from "styled-components";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -18,12 +19,17 @@ const HomePage = () => {
   }, [userInfo, setPosts]);
 
   return (
-    <>
+    <Main>
       {posts.map((post) => (
         <Posts key={post._id} post={post} />
       ))}
-    </>
+    </Main>
   );
 };
 
 export default HomePage;
+
+let Main = styled.div`
+  width: 60%;
+  margin-top: 7.5rem;
+`;

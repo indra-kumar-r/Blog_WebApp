@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { format } from "date-fns";
 import ReactHtmlParser from "@orrisroot/react-html-parser";
+import GoBackBtn from "./utilities/GoBackBtn";
 
 const PostPage = () => {
   let [postInfo, setPostInfo] = useState(null);
@@ -20,6 +21,7 @@ const PostPage = () => {
     <>
       {postInfo && (
         <PostData>
+          <GoBackBtn />
           <div className="postHeader">
             <h3>{postInfo.title}</h3>
             <span>
@@ -42,6 +44,7 @@ const PostPage = () => {
 export default PostPage;
 
 let PostData = styled.div`
+  margin-top: 7.5rem;
   width: 60%;
   display: flex;
   flex-direction: column;

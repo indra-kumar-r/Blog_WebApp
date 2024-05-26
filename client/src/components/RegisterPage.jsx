@@ -70,6 +70,7 @@ const RegisterPage = () => {
 export default RegisterPage;
 
 let FormContainer = styled.div`
+  margin-top: 7.5rem;
   width: 30%;
   display: flex;
   justify-content: center;

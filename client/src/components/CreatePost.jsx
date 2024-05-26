@@ -49,9 +49,11 @@ const CreatePost = () => {
   return (
     <>
       <Form onSubmit={createNewPost}>
-        <div className="formImage">
-          <img src={file} alt="" />
-        </div>
+        {file && (
+          <div className="imgDiv">
+            <img src={`${file}`} />
+          </div>
+        )}
         <input
           type="text"
           value={title}
@@ -89,9 +91,10 @@ const CreatePost = () => {
 export default CreatePost;
 
 let Form = styled.form`
+  margin-top: 7.5rem;
   width: 60%;
   max-height: 35rem;
-  box-shadow: 0 0 0.5rem violet;
+  box-shadow: 0 0 0.25rem black;
   padding: 1rem 2rem;
   border-radius: 0.25rem;
   display: flex;
@@ -101,15 +104,19 @@ let Form = styled.form`
   overflow: hidden;
   overflow-y: auto;
 
-  .formImage {
+  .imgDiv {
     width: 100%;
-    max-height: 20rem;
+    min-height: 25rem;
+    max-height: 35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 
-    img {
+    & img {
       width: 100%;
-      max-height: 100%;
-      object-fit: fill;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -121,8 +128,8 @@ let Form = styled.form`
     padding: 0.5rem 0;
 
     &::placeholder {
-      font-style: italic;
-      letter-spacing: 0.25rem;
+      font-family: "Times New Roman", Times, serif;
+      letter-spacing: 0.15rem;
     }
   }
 

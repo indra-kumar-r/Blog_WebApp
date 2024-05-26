@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import Profile from "./subComponents/Profile";
+import styled from "styled-components";
 
 const Header = () => {
   let { userInfo, setUserInfo } = useContext(UserContext);
@@ -19,31 +20,70 @@ const Header = () => {
   let username = userInfo?.username;
 
   return (
-    <div className="header">
-      <div className="logo">
-        <Link to={"/"} className="blogLogo">
-          <img src="/images/logo.png" /> MyBlog
-        </Link>
+    <Main>
+      <div className="header">
+        <div className="logo">
+          <NavLink to={"/"} className="blogLogo">
+            <img src="/images/logo.png" />{" "}
+            <span className="text-success fw-bold">MyBlog</span>
+          </NavLink>
+        </div>
+        <div className="navbar">
+          {username && (
+            <>
+              <NavLink to={"/"}>Home</NavLink>
+              <NavLink to={"/create"}>Create new post</NavLink>
+              <NavLink to={"/posts"}>Posts</NavLink>
+              <Profile />
+            </>
+          )}
+          {!username && (
+            <>
+              <NavLink to={"/"}>Home</NavLink>
+              <NavLink to="/login">Login</NavLink>
+              <NavLink to="/register">Register</NavLink>
+            </>
+          )}
+        </div>
       </div>
-      <div className="navbar">
-        {username && (
-          <>
-            <Link to={"/"}>Home</Link>
-            <Link to={"/create"}>Create new post</Link>
-            <Link to={"/posts"}>Posts</Link>
-            <Profile />
-          </>
-        )}
-        {!username && (
-          <>
-            <Link to={"/"}>Home</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-          </>
-        )}
-      </div>
-    </div>
+    </Main>
   );
 };
 
 export default Header;
+
+let Main = styled.div`
+  width: 60%;
+  height: 5rem;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  transition: all 0.25s;
+
+  a {
+    @include logoStyles;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #069242;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      transform: translateY(-0.05rem);
+    }
+
+    &[aria-current] {
+      color: violet;
+      transform: translateY(-0.1rem);
+      border-bottom: 1px solid black;
+    }
+
+    &.blogLogo {
+      border: none;
+      transform: none;
+    }
+  }
+`;

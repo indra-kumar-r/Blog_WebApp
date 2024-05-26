@@ -12,7 +12,7 @@ router.get("/profile", controller.profile);
 router.post("/post", controller.p_post);
 router.get("/post", controller.g_post);
 router.put("/post", controller.u_post);
-router.delete("/post:id", controller.d_post);
+router.delete("/post/:id", controller.d_post);
 
 router.get("/userpost", controller.userpost);
 router.get("/post/:id", controller.g_post_id);

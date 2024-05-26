@@ -39,6 +39,7 @@ let Box = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  background-color: white;
 
   .profileIcon {
     display: flex;
@@ -51,7 +52,6 @@ let Box = styled.div`
   .profileLinks {
     width: 10rem;
     position: absolute;
-    /* left: -2rem; */
     top: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -61,6 +61,8 @@ let Box = styled.div`
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0;
+    overflow: hidden;
+    z-index: 100;
 
     a {
       padding: 1rem 0.55rem;
