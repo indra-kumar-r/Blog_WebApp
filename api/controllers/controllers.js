@@ -79,7 +79,7 @@ module.exports.g_post = async (req, res) => {
   try {
     const posts = await Posts.find()
       .populate("author", ["username"])
-      .sort({ createdAt: -1 })
+      .sort({ updatedAt: -1 })
       .limit(20);
     res.json(posts);
   } catch (error) {

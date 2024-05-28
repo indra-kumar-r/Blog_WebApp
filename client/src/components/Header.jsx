@@ -68,7 +68,7 @@ let Main = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #069242;
+    color: darkgray;
     border-bottom: 1px solid transparent;
 
     &:hover {
@@ -76,7 +76,7 @@ let Main = styled.div`
     }
 
     &[aria-current] {
-      color: violet;
+      color: black;
       transform: translateY(-0.1rem);
       border-bottom: 1px solid black;
     }

@@ -24,11 +24,9 @@ const PostPage = () => {
           <GoBackBtn />
           <div className="postHeader">
             <h3>{postInfo.title}</h3>
-            <span>
+            <span className="text-secondary">
               <h4>{postInfo.author.username}, </h4>
-              <h5>
-                {format(new Date(postInfo.createdAt), "MMM dd, yyyy | HH:mm")}
-              </h5>
+              <h5>{format(new Date(postInfo.updatedAt), "MMM dd, yyyy")}</h5>
             </span>
           </div>
           <div className="postImg">
@@ -68,16 +66,13 @@ let PostData = styled.div`
 
     span {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       gap: 0.25rem;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Times New Roman", Times, serif;
 
       h4 {
         text-transform: capitalize;
-        font-weight: 100;
-        letter-spacing: 0.15rem;
-        font-size: small;
       }
     }
   }
@@ -97,6 +92,7 @@ let PostData = styled.div`
 
   .postContent {
     line-height: 2;
+    text-align: justify;
 
     a {
       text-decoration: none;

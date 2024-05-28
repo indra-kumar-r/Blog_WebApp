@@ -2,16 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
 import { UserContext } from "./UserContext";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserPosts = () => {
   let [posts, setPosts] = useState([]);
   let { userInfo } = useContext(UserContext);
-  let [redirect, setRedirect] = useState(false);
+  let navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo === null) {
-      setRedirect(true);
+    if (userInfo === null || Object.keys(userInfo).length === 0) {
+      navigate("/");
     } else {
       fetch(`http://localhost:9000/userpost`)
         .then((response) => response.json())
@@ -25,11 +25,7 @@ const UserPosts = () => {
           console.log(error);
         });
     }
-  }, [userInfo]);
-
-  if (redirect) {
-    return <Navigate to={"/"} />;
-  }
+  }, [userInfo, navigate]);
 
   return (
     <>

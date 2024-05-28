@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link, Navigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "./UserContext";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   let [username, setUsername] = useState("");
@@ -19,11 +20,12 @@ const LoginPage = () => {
     });
     if (response.ok) {
       response.json().then((userInfo) => {
+        toast.success("You have successfully logged in.");
         setUserInfo(userInfo);
         setRedirect(true);
       });
     } else {
-      alert("Login Failed");
+      toast.error("Login Failed.");
     }
   }
 

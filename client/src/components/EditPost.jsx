@@ -1,34 +1,41 @@
-import { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import GoBackBtn from "./utilities/GoBackBtn";
+import toast from "react-hot-toast";
+import { UserContext } from "./UserContext";
 
 const EditPost = () => {
-  let { id } = useParams();
-  let [title, setTitle] = useState("");
-  let [summary, setSummary] = useState("");
-  let [content, setContent] = useState("");
-  let [imgCover, setImgCover] = useState(
+  const { id } = useParams();
+  const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
+  const [content, setContent] = useState("");
+  const [imgCover, setImgCover] = useState(
     "https://www.tgsin.in/images/joomlart/demo/default.jpg"
   );
-  let [redirect, setRedirect] = useState(false);
+  const { userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:9000/post/${id}`)
-      .then((response) => response.json())
-      .then((postData) => {
-        setTitle(postData.title);
-        setSummary(postData.summary);
-        setContent(postData.content);
-        setImgCover(postData.cover);
-      });
-  }, []);
+    if (userInfo === null || Object.keys(userInfo).length === 0) {
+      navigate("/");
+    } else {
+      fetch(`http://localhost:9000/post/${id}`)
+        .then((response) => response.json())
+        .then((postData) => {
+          setTitle(postData.title);
+          setSummary(postData.summary);
+          setContent(postData.content);
+          setImgCover(postData.cover);
+        });
+    }
+  }, [userInfo, navigate]);
 
   async function updatePost(e) {
     e.preventDefault();
-    let response = await fetch(`http://localhost:9000/post`, {
+    const response = await fetch(`http://localhost:9000/post`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -41,20 +48,21 @@ const EditPost = () => {
       credentials: "include",
     });
     if (response.ok) {
-      alert("Post Updated Successfully.");
+      toast.success("Post Updated Successfully");
+
       setRedirect(true);
     } else {
-      alert("Failed updating the Post.");
+      toast.error("Failed updating the Post");
     }
   }
 
-  let deletePost = async (postId) => {
+  const deletePost = async (postId) => {
     try {
       const response = await fetch(`http://localhost:9000/post/${postId}`, {
         method: "DELETE",
       });
       if (response.ok) {
-        alert("Post Deleted successfully.");
+        toast.success("Post Deleted successfully.");
         setRedirect(true);
       } else {
         throw new Error("Failed deleting the Post.");
@@ -63,10 +71,6 @@ const EditPost = () => {
       console.log("Failed deleting the Post:", error.message);
     }
   };
-
-  if (redirect) {
-    return <Navigate to={`/posts`} />;
-  }
 
   return (
     <>
@@ -127,7 +131,7 @@ const EditPost = () => {
 
 export default EditPost;
 
-let Img = styled.div`
+const Img = styled.div`
   width: 100%;
   height: 15rem;
 
@@ -139,7 +143,7 @@ let Img = styled.div`
   }
 `;
 
-let Form = styled.form`
+const Form = styled.form`
   margin-top: 7.5rem;
   width: 60%;
   max-height: 35rem;

@@ -17,6 +17,7 @@ export default GoBackBtn;
 
 let Main = styled.div`
   font-size: black;
+
   span {
     cursor: pointer;
     transition: all 0.2s;

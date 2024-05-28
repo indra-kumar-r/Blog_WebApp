@@ -16,14 +16,18 @@ const Posts = ({ post }) => {
   return (
     <Link to={`/post/${post._id}`} className="post">
       <img loading="lazy" src={`${coverImage}`} alt={post.title} />
-      <h4>{post.title}</h4>
+      <div className="px-2 fw-bold text-uppercase">{post.title}</div>
       <div className="info">
         {post.author && (
-          <div className="authorName">{post.author.username}</div>
+          <div className="authorName text-secondary">
+            {post.author.username}
+          </div>
         )}
-        <time>{format(new Date(post.createdAt), "MMM dd, yyyy | HH:mm")}</time>
+        <time className="text-secondary">
+          {format(new Date(post.createdAt), "MMM dd, yyyy")}
+        </time>
       </div>
-      <p>{post.summary}</p>
+      <p className="text-muted">{post.summary}</p>
     </Link>
   );
 };

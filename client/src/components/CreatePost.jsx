@@ -3,27 +3,31 @@ import "react-quill/dist/quill.snow.css";
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CreatePost = () => {
-  let [title, setTitle] = useState("");
-  let [summary, setSummary] = useState("");
-  let [content, setContent] = useState("");
-  let [file, setFile] = useState("");
-  let { userInfo } = useContext(UserContext);
-  let [redirect, setRedirect] = useState(false);
+  const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
+  const [content, setContent] = useState("Write your blog post here...");
+  const [file, setFile] = useState("");
+  const { userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo === null) {
-      setRedirect(true);
+    if (userInfo === null || Object.keys(userInfo).length === 0) {
+      navigate("/");
     }
-  }, [userInfo]);
+  }, [userInfo, navigate]);
 
-  if (redirect) {
-    return <Navigate to={"/"} />;
-  }
+  const resetFun = () => {
+    setTitle("");
+    setSummary("");
+    setContent("");
+    setFile("");
+  };
 
-  let createNewPost = async (e) => {
+  const createNewPost = async (e) => {
     e.preventDefault();
     try {
       let response = await fetch("http://localhost:9000/post", {
@@ -34,54 +38,92 @@ const CreatePost = () => {
       });
       let responseData = await response.json();
       if (response.ok) {
-        alert(responseData.message);
+        toast.promise(
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(responseData.message);
+              resetFun();
+            }, 2000);
+          }),
+          {
+            loading: "Creating post...",
+            success: "Post created successfully",
+            error: "Failed to create post",
+          }
+        );
       }
-
-      setTitle("");
-      setSummary("");
-      setContent("");
-      setFile("");
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("An error occurred while creating the post");
     }
   };
+
+  let postImageContent =
+    file || "https://www.tgsin.in/images/joomlart/demo/default.jpg";
 
   return (
     <>
       <Form onSubmit={createNewPost}>
-        {file && (
-          <div className="imgDiv">
-            <img src={`${file}`} />
+        <div className="row">
+          <span className="d-flex justify-content-end">
+            <i
+              title="reset"
+              className="bi-arrow-clockwise"
+              onClick={() => resetFun()}
+            ></i>
+          </span>
+        </div>
+        <div className="row">
+          <div className="col d-flex gap-2 flex-column">
+            <div className="imgDiv">
+              <img src={postImageContent} alt="Post cover" />
+            </div>
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="postImage"
+                placeholder=""
+                required
+                value={file}
+                onChange={(e) => setFile(e.target.value)}
+              />
+              <label htmlFor="postImage">Image Url</label>
+            </div>
           </div>
-        )}
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          required
-        />
-        <input
-          type="text"
-          onChange={(e) => setSummary(e.target.value)}
-          value={summary}
-          placeholder="Summary"
-          required
-        />
-        <input
-          type="text"
-          value={file}
-          onChange={(e) => setFile(e.target.value)}
-          placeholder="Image URL"
-          required
-        />
-        <ReactQuill
-          className="textbox"
-          value={content}
-          theme="snow"
-          onChange={(newValue) => setContent(newValue)}
-          required
-        />
+          <div className="col d-flex gap-2 flex-column">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="postTitle"
+                placeholder=""
+                required
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <label htmlFor="postTitle">Title</label>
+            </div>
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="postSummary"
+                placeholder=""
+                required
+                onChange={(e) => setSummary(e.target.value)}
+                value={summary}
+              />
+              <label htmlFor="postSummary">Summary</label>
+            </div>
+            <StyledReactQuill
+              className="textbox"
+              value={content}
+              theme="snow"
+              onChange={(newValue) => setContent(newValue)}
+              required
+            />
+          </div>
+        </div>
         <button type="submit">Post</button>
       </Form>
     </>
@@ -93,21 +135,45 @@ export default CreatePost;
 let Form = styled.form`
   margin-top: 7.5rem;
   width: 60%;
-  max-height: 35rem;
+  height: 35rem;
   box-shadow: 0 0 0.25rem black;
   padding: 1rem 2rem;
   border-radius: 0.25rem;
   display: flex;
+  justify-content: space-around;
   align-items: center;
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
   overflow-y: auto;
 
+  .row {
+    .bi-arrow-clockwise {
+      background-color: #39ef88;
+      padding: 0.25rem 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.5s;
+
+      &:hover {
+        transform: rotate(360deg);
+      }
+    }
+
+    width: 100%;
+
+    .col {
+      justify-content: flex-start;
+    }
+  }
+
   .imgDiv {
     width: 100%;
-    min-height: 25rem;
-    max-height: 35rem;
+    min-height: 15rem;
+    max-height: 15rem;
+    border: 0.01rem solid lightgray;
+    border-radius: 0.25rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -120,17 +186,23 @@ let Form = styled.form`
     }
   }
 
+  .form-floating {
+    width: 100%;
+  }
+
   input {
     width: 100%;
-    border: none;
-    border-bottom: 0.01rem solid violet;
-    outline: none;
-    padding: 0.5rem 0;
+    transition: all 0.25s;
 
-    &::placeholder {
-      font-family: "Times New Roman", Times, serif;
-      letter-spacing: 0.15rem;
+    &:focus {
+      box-shadow: 0 0.1rem 0 black;
+      outline: none;
     }
+  }
+
+  label {
+    color: darkgray;
+    font-family: "Times New Roman", Times, serif;
   }
 
   .textbox {
@@ -154,5 +226,25 @@ let Form = styled.form`
     &:focus {
       background-color: #36f88a;
     }
+  }
+`;
+
+let StyledReactQuill = styled(ReactQuill)`
+  .ql-container {
+    border-radius: 0.25rem;
+    min-width: 25rem;
+    max-width: 25rem;
+    min-height: 15rem;
+    max-height: 15rem;
+    overflow-y: auto;
+  }
+
+  .ql-toolbar {
+    border-radius: 0.25rem;
+  }
+
+  .ql-editor {
+    max-width: 100%;
+    height: 100%;
   }
 `;

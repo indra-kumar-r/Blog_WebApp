@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const RegisterPage = () => {
   let [username, setUsername] = useState("");
@@ -15,10 +16,10 @@ const RegisterPage = () => {
       body: JSON.stringify({ username, password }),
     });
     if (response.status === 200) {
-      alert("Registration successfull");
+      toast.success("You have successfully registered.");
       setRedirect(true);
     } else {
-      alert("Regsitration failed;");
+      toast.error("Regsitration failed.");
     }
   }
 

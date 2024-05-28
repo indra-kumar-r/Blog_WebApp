@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import styled from "styled-components";
 import { FaRegUserCircle } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   let { userInfo, setUserInfo } = useContext(UserContext);
@@ -13,7 +14,10 @@ const Profile = () => {
       method: "POST",
     });
     if (response.ok) {
+      toast.success("You have been successfully logged out.");
       setUserInfo(null);
+    } else {
+      toast.error("Logout failed.");
     }
   }
 

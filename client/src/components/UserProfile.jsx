@@ -1,6 +1,17 @@
 import { styled } from "styled-components";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
+  const { userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo === null || Object.keys(userInfo).length === 0) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
   return (
     <>
       <Wrapper>
