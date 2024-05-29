@@ -49,8 +49,7 @@ const EditPost = () => {
     });
     if (response.ok) {
       toast.success("Post Updated Successfully");
-
-      setRedirect(true);
+      navigate(-1);
     } else {
       toast.error("Failed updating the Post");
     }
@@ -63,7 +62,7 @@ const EditPost = () => {
       });
       if (response.ok) {
         toast.success("Post Deleted successfully.");
-        setRedirect(true);
+        navigate(-1);
       } else {
         throw new Error("Failed deleting the Post.");
       }

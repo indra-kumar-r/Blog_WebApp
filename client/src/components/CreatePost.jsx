@@ -23,7 +23,7 @@ const CreatePost = () => {
   const resetFun = () => {
     setTitle("");
     setSummary("");
-    setContent("");
+    setContent("Write your blog post here...");
     setFile("");
   };
 

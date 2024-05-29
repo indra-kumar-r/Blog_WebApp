@@ -4,10 +4,12 @@ import { styled } from "styled-components";
 import { format } from "date-fns";
 import ReactHtmlParser from "@orrisroot/react-html-parser";
 import GoBackBtn from "./utilities/GoBackBtn";
+import Spinner from "./utilities/Spinner";
 
 const PostPage = () => {
   let [postInfo, setPostInfo] = useState(null);
   let { id } = useParams();
+  let [loader, setLoader] = useState(true);
 
   useEffect(() => {
     fetch(`http://localhost:9000/post/${id}`)
@@ -15,7 +17,25 @@ const PostPage = () => {
       .then((postData) => {
         setPostInfo(postData);
       });
+  }, [id]);
+
+  useEffect(() => {
+    let spinnerTime = setTimeout(() => {
+      setLoader(false);
+    }, 750);
+
+    return () => clearTimeout(spinnerTime);
   }, []);
+
+  if (loader) {
+    return (
+      <>
+        <PostData className="spinnerDiv">
+          <Spinner />
+        </PostData>
+      </>
+    );
+  }
 
   return (
     <>
@@ -48,6 +68,13 @@ let PostData = styled.div`
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 3rem;
+
+  &.spinnerDiv {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   .postHeader {
     width: 100%;
