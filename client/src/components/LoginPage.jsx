@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link, Navigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { UserContext } from "./UserContext";
 import toast from "react-hot-toast";
 
@@ -9,6 +9,13 @@ const LoginPage = () => {
   let [password, setPassword] = useState("");
   let [redirect, setRedirect] = useState(false);
   let { setUserInfo } = useContext(UserContext);
+  let inputFocus = useRef(null);
+
+  useEffect(() => {
+    if (inputFocus.current) {
+      inputFocus.current.focus();
+    }
+  }, []);
 
   async function login(e) {
     e.preventDefault();
@@ -44,11 +51,12 @@ const LoginPage = () => {
               type="text"
               name="username"
               id="username"
-              placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               autoComplete="off"
               required
+              placeholder="Username"
+              ref={inputFocus}
             />
           </FormSection>
           <FormSection>
@@ -57,11 +65,11 @@ const LoginPage = () => {
               type="password"
               name="password"
               id="password"
-              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="off"
               required
+              placeholder="Password"
             />
           </FormSection>
           <FormSection>

@@ -8,6 +8,7 @@ const UserPosts = () => {
   let [posts, setPosts] = useState([]);
   let { userInfo } = useContext(UserContext);
   let navigate = useNavigate();
+  let defaultImage = "https://www.tgsin.in/images/joomlart/demo/default.jpg";
 
   useEffect(() => {
     if (userInfo === null || Object.keys(userInfo).length === 0) {
@@ -34,7 +35,12 @@ const UserPosts = () => {
           <Link key={post._id} to={`/edit/${post._id}`}>
             <Post>
               <div className="imageDiv">
-                <img src={post.cover} />
+                <img
+                  src={post.cover || defaultImage}
+                  onError={(e) => {
+                    e.target.src = defaultImage;
+                  }}
+                />
               </div>
               <div className="div_content">
                 <div>Title: {post.title}</div>
@@ -57,7 +63,8 @@ let PostCards = styled.div`
   margin-top: 7.5rem;
   width: 60%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(calc(30% - 1rem), 1fr));
+  /* grid-template-columns: repeat(auto-fill, minmax(calc(30% - 1rem), 1fr)); */
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
   gap: 1rem;
   padding-bottom: 1rem;
 

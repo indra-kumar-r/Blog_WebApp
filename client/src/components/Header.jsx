@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import Profile from "./subComponents/Profile";
 import styled from "styled-components";
+import Nav from "./utilities/Nav";
 
 const Header = () => {
   let { userInfo, setUserInfo } = useContext(UserContext);
@@ -35,6 +36,7 @@ const Header = () => {
               <NavLink to={"/create"}>Create new post</NavLink>
               <NavLink to={"/posts"}>Posts</NavLink>
               <Profile />
+              <Nav />
             </>
           )}
           {!username && (

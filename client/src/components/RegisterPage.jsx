@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import { Link, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 const RegisterPage = () => {
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [redirect, setRedirect] = useState(false);
+  let inputFocus = useRef(null);
+
+  useEffect(() => {
+    if (inputFocus.current) {
+      inputFocus.current.focus();
+    }
+  }, []);
 
   async function register(e) {
     e.preventDefault();
@@ -19,7 +26,9 @@ const RegisterPage = () => {
       toast.success("You have successfully registered.");
       setRedirect(true);
     } else {
-      toast.error("Regsitration failed.");
+      let data = await response.json();
+      toast.error(data ? data.errors : "Regsitration failed.");
+      console.log(data);
     }
   }
 
@@ -42,6 +51,7 @@ const RegisterPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              ref={inputFocus}
             />
           </FormSection>
           <FormSection>

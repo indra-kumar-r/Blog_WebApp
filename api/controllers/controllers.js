@@ -12,13 +12,21 @@ mongoose.connect("mongodb://localhost:27017/BlogWebApp");
 module.exports.register = async (req, res) => {
   let { username, password } = req.body;
   try {
-    const UserDoc = await User.create({
+    const user = new User({
       username,
       password: bcrypt.hashSync(password, salt),
     });
-    res.json(UserDoc);
-  } catch (e) {
-    res.status(400).json(e);
+    const UserDoc = await user.save();
+    res.status(200).json(UserDoc);
+  } catch (error) {
+    if (error.name === "ValidationError") {
+      const errors = Object.values(error.errors).map((err) => err.message);
+      res.status(400).json({ errors });
+    } else if (error.message.includes("Username already exists")) {
+      res.status(400).json({ errors: [error.message] });
+    } else {
+      res.status(400).json({ errors: "Internal server error" });
+    }
   }
 };
 
