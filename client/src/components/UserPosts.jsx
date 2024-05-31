@@ -76,7 +76,7 @@ let PostCards = styled.div`
 
 let Post = styled.div`
   width: 100%;
-  height: 25rem;
+  height: 17rem;
   border: 0.01rem solid plum;
   display: flex;
   justify-content: space-between;
@@ -111,8 +111,9 @@ let Post = styled.div`
     flex-direction: column;
     padding: 1rem 0.5rem;
     overflow: hidden;
-    gap: 1rem;
+    gap: 0.25rem;
     font-style: italic;
     overflow-y: auto;
+    font-size: small;
   }
 `;

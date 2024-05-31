@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import styled from "styled-components";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -22,79 +22,53 @@ const Profile = () => {
   }
 
   return (
-    <>
-      <Box>
-        <div className="profileIcon">Profile</div>
-        <div className="profileLinks">
-          <Link to={"/profile"}>
-            <FaRegUserCircle /> <span>{userInfo?.username}</span>
-          </Link>
-          <a onClick={logout}>Logout</a>
-        </div>
-      </Box>
-    </>
+    <ProfileWrapper>
+      <div className="dropdown">
+        <button
+          className="btn dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Profile
+        </button>
+        <ul className="dropdown-menu p-0 overflow-hidden">
+          <li>
+            <Link className="py-2" to={"/profile"}>
+              {/* <FaRegUserCircle size={20} className="me-2 text-black" />{" "} */}
+              <span className="text-warning">Profile</span>
+            </Link>
+          </li>
+          <li>
+            <a className="bg-secondary py-2 text-light">
+              <i className="bi bi-key me-2 text-white fs-5"></i>
+              <span> Reset Password</span>
+            </a>
+          </li>
+          <li>
+            <a className="bg-dark py-2 text-white" onClick={logout}>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </ProfileWrapper>
   );
 };
 
 export default Profile;
 
-let Box = styled.div`
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-
-  .profileIcon {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-size: 1rem;
-    color: #069242;
+let ProfileWrapper = styled.div`
+  li {
+    all: unset;
   }
 
-  .profileLinks {
-    width: 10rem;
-    position: absolute;
-    top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    box-shadow: 0 0 0.25rem 0 black;
-    border-radius: 0.25rem;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0;
-    overflow: hidden;
-    z-index: 100;
-
-    a {
-      padding: 1rem 0.55rem;
-      width: 100%;
-      display: flex;
-      justify-content: flex-start;
-      text-align: left;
-      border-radius: 0.25rem;
-      color: black;
-      text-decoration: none;
-
-      &:hover,
-      &:active {
-        background-color: black;
-        color: white;
-      }
-
-      span {
-        margin-left: 0.5rem;
-        text-transform: capitalize;
-        font-style: italic;
-        color: violet;
-      }
-    }
+  button {
+    border: none;
+    outline: none;
   }
 
-  &:hover > .profileLinks {
-    visibility: visible;
-    opacity: 1;
+  a {
+    cursor: pointer;
   }
 `;

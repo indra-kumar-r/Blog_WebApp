@@ -10,6 +10,7 @@ import UserPosts from "./components/UserPosts";
 import PostPage from "./components/PostPage";
 import EditPost from "./components/EditPost";
 import UserProfile from "./components/UserProfile";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path={"/post/:id"} element={<PostPage />} />
             <Route path={"/edit/:id"} element={<EditPost />} />
             <Route path={"/profile"} element={<UserProfile />} />
+            <Route path={"*"} element={<NotFound />} />
           </Route>
         </Routes>
       </UserContextProvider>

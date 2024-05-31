@@ -124,7 +124,13 @@ const CreatePost = () => {
             />
           </div>
         </div>
-        <button type="submit">Post</button>
+        <button
+          title="create a post"
+          className="btn btn-success px-3"
+          type="submit"
+        >
+          <i class="bi bi-arrow-up-circle fs-4"></i>
+        </button>
       </Form>
     </>
   );
@@ -188,43 +194,20 @@ let Form = styled.form`
 
   .form-floating {
     width: 100%;
-  }
 
-  input {
-    width: 100%;
-    transition: all 0.25s;
+    input {
+      width: 100%;
+      transition: all 0.25s;
 
-    &:focus {
-      box-shadow: 0 0.1rem 0 black;
-      outline: none;
-    }
-  }
+      &:focus {
+        box-shadow: 0 0.1rem 0 black;
+        outline: none;
+      }
 
-  label {
-    color: darkgray;
-    font-family: "Times New Roman", Times, serif;
-  }
-
-  .textbox {
-    width: 100%;
-  }
-
-  button {
-    padding: 0.75rem 1.75rem;
-    border: none;
-    outline: none;
-    border-radius: 0.25rem;
-    background-color: #39ef88;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 0.25rem;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-
-    &:hover,
-    &:focus {
-      background-color: #36f88a;
+      label {
+        color: darkgray;
+        font-family: "Times New Roman", Times, serif;
+      }
     }
   }
 `;

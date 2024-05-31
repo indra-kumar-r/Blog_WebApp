@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import ReactHtmlParser from "@orrisroot/react-html-parser";
 import GoBackBtn from "./utilities/GoBackBtn";
 import Spinner from "./utilities/Spinner";
+import NotFound from "./NotFound";
 
 const PostPage = () => {
   let [postInfo, setPostInfo] = useState(null);
@@ -37,9 +38,10 @@ const PostPage = () => {
     );
   }
 
+  if (postInfo.message === "NotFound") return <NotFound />;
   return (
     <>
-      {postInfo && (
+      {postInfo ? (
         <PostData>
           <GoBackBtn />
           <div className="postHeader">
@@ -54,6 +56,8 @@ const PostPage = () => {
           </div>
           <div className="postContent">{ReactHtmlParser(postInfo.content)}</div>
         </PostData>
+      ) : (
+        <NotFound />
       )}
     </>
   );

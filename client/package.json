@@ -12,6 +12,7 @@
   "dependencies": {
     "@orrisroot/react-html-parser": "^2.1.2",
     "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
     "date-fns": "^3.6.0",
     "nanoid": "^5.0.7",
     "react": "^18.2.0",

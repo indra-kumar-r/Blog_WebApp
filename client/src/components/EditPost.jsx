@@ -71,56 +71,98 @@ const EditPost = () => {
     }
   };
 
+  const resetFun = () => {
+    setTitle("");
+    setSummary("");
+    setContent("Write your blog post here...");
+    setImgCover("");
+  };
+
+  let defaultImage = "https://www.tgsin.in/images/joomlart/demo/default.jpg";
+
   return (
     <>
       <Form onSubmit={updatePost}>
-        <div className="formBtns">
+        <div className="formBtns d-flex justify-content-between">
           <GoBackBtn />
+          <span className="d-flex justify-content-end">
+            <i
+              title="reset"
+              className="bi-arrow-clockwise"
+              onClick={() => resetFun()}
+            ></i>
+          </span>
         </div>
-        <Img>
-          <img className="imgData" src={`${imgCover}`} />
-        </Img>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          autoComplete="off"
-          required
-        />
-        <input
-          type="text"
-          value={summary}
-          onChange={(e) => setSummary(e.target.value)}
-          placeholder="Summary"
-          autoComplete="off"
-          required
-        />
-        <input
-          type="text"
-          value={imgCover}
-          onChange={(e) => setImgCover(e.target.value)}
-          placeholder="Image URL"
-          autoComplete="off"
-          required
-        />
-        <ReactQuill
-          className="textbox"
-          value={content}
-          theme="snow"
-          onChange={(newValue) => setContent(newValue)}
-          required
-        />
-        <div className="btns">
-          <button className="btn btn-warning fw-bold" type="submit">
-            UPDATE POST
+        <div className="row">
+          <div className="col d-flex gap-2 flex-column">
+            <div className="imgDiv">
+              <img
+                className="imgData"
+                src={imgCover ? `${imgCover}` : defaultImage}
+              />
+            </div>
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="postImage"
+                value={imgCover}
+                onChange={(e) => setImgCover(e.target.value)}
+                placeholder=""
+                autoComplete="off"
+                required
+              />
+              <label htmlFor="postImage">Image Url</label>
+            </div>
+          </div>
+          <div className="col d-flex gap-2 flex-column">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="postTitle"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder=""
+                autoComplete="off"
+                required
+              />
+              <label htmlFor="postTitle">Title</label>
+            </div>
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="postSummary"
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
+                placeholder="Summary"
+                autoComplete="off"
+                required
+              />
+              <label htmlFor="postSummary">Summary</label>
+            </div>
+            <StyledReactQuill
+              className="textbox"
+              value={content}
+              theme="snow"
+              onChange={(newValue) => setContent(newValue)}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="btns d-flex gap-3">
+          <button title="update post" className="btn btn-warning" type="submit">
+            <i class="bi bi-box-arrow-up fs-4"></i>
           </button>
           <button
-            className="btn btn-danger fw-bold"
+            title="delete post"
+            className="btn btn-danger"
             type="button"
             onClick={() => deletePost(id)}
           >
-            DELETE
+            <i class="bi bi-trash3 fs-4"></i>
           </button>
         </div>
       </Form>
@@ -129,18 +171,6 @@ const EditPost = () => {
 };
 
 export default EditPost;
-
-const Img = styled.div`
-  width: 100%;
-  height: 15rem;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 0.25rem;
-  }
-`;
 
 const Form = styled.form`
   margin-top: 7.5rem;
@@ -156,29 +186,77 @@ const Form = styled.form`
   overflow: hidden;
   overflow-y: auto;
 
-  .formBtns {
+  .imgDiv {
     width: 100%;
-  }
+    min-height: 15rem;
+    max-height: 15rem;
+    border: 0.01rem solid lightgray;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 
-  input {
-    width: 100%;
-    border: none;
-    border-bottom: 0.01rem solid violet;
-    outline: none;
-    padding: 0.5rem 0;
-
-    &::placeholder {
-      font-style: italic;
-      letter-spacing: 0.25rem;
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
-  .textbox {
+  .form-floating {
     width: 100%;
+
+    input {
+      width: 100%;
+      transition: all 0.25s;
+
+      &:focus {
+        box-shadow: 0 0.1rem 0 black;
+        outline: none;
+      }
+    }
+
+    label {
+      color: darkgray;
+      font-family: "Times New Roman", Times, serif;
+    }
   }
 
-  .btns {
-    display: flex;
-    gap: 0.5rem;
+  .formBtns {
+    width: 100%;
+    .bi-arrow-clockwise {
+      background-color: #39ef88;
+      padding: 0.25rem 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.5s;
+
+      &:hover {
+        transform: rotate(360deg);
+      }
+    }
+  }
+`;
+
+let StyledReactQuill = styled(ReactQuill)`
+  .ql-container {
+    border-radius: 0.25rem;
+    min-width: 25rem;
+    max-width: 25rem;
+    min-height: 15rem;
+    max-height: 15rem;
+    overflow-y: auto;
+  }
+
+  .ql-toolbar {
+    border-radius: 0.25rem;
+  }
+
+  .ql-editor {
+    max-width: 100%;
+    height: 100%;
+    text-align: justify;
   }
 `;

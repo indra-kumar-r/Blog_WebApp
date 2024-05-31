@@ -137,7 +137,7 @@ module.exports.d_post = async (req, res) => {
 
 module.exports.userpost = async (req, res) => {
   try {
-    const posts = await Posts.find().sort({ createdAt: -1 });
+    const posts = await Posts.find().sort({ updatedAt: -1 });
     res.json(posts);
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -147,8 +147,12 @@ module.exports.userpost = async (req, res) => {
 
 module.exports.g_post_id = async (req, res) => {
   let { id } = req.params;
-  let post = await Posts.findById(id).populate("author", ["username"]);
-  res.json(post);
+  try {
+    let post = await Posts.findById(id).populate("author", ["username"]);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(400).json({ error: error, message: "NotFound" });
+  }
 };
 
 module.exports.logout = (req, res) => {

@@ -20,6 +20,19 @@ const Header = () => {
 
   let username = userInfo?.username;
 
+  const beforeLogin = [
+    { label: "Home", value: "/" },
+    { label: "Create", value: "/create" },
+    { label: "Posts", value: "/posts" },
+    { label: <Profile />, value: "#" },
+  ];
+
+  const afterLogin = [
+    { label: "Home", value: "/" },
+    { label: "Login", value: "/login" },
+    { label: "Register", value: "/register" },
+  ];
+
   return (
     <Main>
       <div className="header">
@@ -30,22 +43,7 @@ const Header = () => {
           </NavLink>
         </div>
         <div className="navbar">
-          {username && (
-            <>
-              <NavLink to={"/"}>Home</NavLink>
-              <NavLink to={"/create"}>Create new post</NavLink>
-              <NavLink to={"/posts"}>Posts</NavLink>
-              <Profile />
-              <Nav />
-            </>
-          )}
-          {!username && (
-            <>
-              <NavLink to={"/"}>Home</NavLink>
-              <NavLink to="/login">Login</NavLink>
-              <NavLink to="/register">Register</NavLink>
-            </>
-          )}
+          {username ? <Nav props={beforeLogin} /> : <Nav props={afterLogin} />}
         </div>
       </div>
     </Main>
@@ -62,6 +60,12 @@ let Main = styled.div`
   background-color: white;
   transition: all 0.25s;
 
+  .navbar {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+
   a {
     @include logoStyles;
     text-decoration: none;
@@ -73,7 +77,10 @@ let Main = styled.div`
     color: darkgray;
     border-bottom: 1px solid transparent;
 
-    &:hover {
+    &:hover,
+    &:focus {
+      outline: none;
+      color: black;
       transform: translateY(-0.05rem);
     }
 
