@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const User = require("../models/User");
 const Posts = require("../models/Post");
+const LikePost = require("../models/LikePost");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -157,4 +158,37 @@ module.exports.g_post_id = async (req, res) => {
 
 module.exports.logout = (req, res) => {
   res.cookie("token", "").json("ok");
+};
+
+// like post
+
+module.exports.p_like = async (req, res) => {
+  const { postId, userName, likeStatus } = req.body;
+  try {
+    let data = new LikePost({ postId, userName, likeStatus });
+    let likeData = await data.save();
+    res.status(200).json({ likeData: likeData, liked: true });
+  } catch (error) {
+    res.status(400).json({ error: error, liked: false });
+  }
+};
+
+module.exports.g_like = async (req, res) => {
+  const { postId } = req.query;
+  try {
+    let data = await LikePost.findOne({ postId });
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+module.exports.d_like = async (req, res) => {
+  const { postId } = req.body;
+  try {
+    await LikePost.deleteOne({ _id: postId });
+    res.status(200).json({ delete: "success" });
+  } catch (error) {
+    res.status(400).json({ error: error, delete: "failed" });
+  }
 };

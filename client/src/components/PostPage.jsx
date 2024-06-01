@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { format } from "date-fns";
@@ -6,11 +6,14 @@ import ReactHtmlParser from "@orrisroot/react-html-parser";
 import GoBackBtn from "./utilities/GoBackBtn";
 import Spinner from "./utilities/Spinner";
 import NotFound from "./NotFound";
+import LikePost from "./subComponents/LikePost";
+import { UserContext } from "./UserContext";
 
 const PostPage = () => {
   let [postInfo, setPostInfo] = useState(null);
   let { id } = useParams();
   let [loader, setLoader] = useState(true);
+  let { userInfo } = useContext(UserContext);
 
   useEffect(() => {
     fetch(`http://localhost:9000/post/${id}`)
@@ -39,11 +42,17 @@ const PostPage = () => {
   }
 
   if (postInfo.message === "NotFound") return <NotFound />;
+
   return (
     <>
       {postInfo ? (
         <PostData>
-          <GoBackBtn />
+          <div className="container-fluid d-flex justify-content-between align-items-center">
+            <GoBackBtn />
+            <div className="options">
+              <LikePost id={postInfo._id} user={userInfo} />
+            </div>
+          </div>
           <div className="postHeader">
             <h3>{postInfo.title}</h3>
             <span className="text-secondary">

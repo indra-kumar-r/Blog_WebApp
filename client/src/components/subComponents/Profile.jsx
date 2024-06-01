@@ -15,7 +15,7 @@ const Profile = () => {
     });
     if (response.ok) {
       toast.success("You have been successfully logged out.");
-      setUserInfo(null);
+      setUserInfo({});
     } else {
       toast.error("Logout failed.");
     }
