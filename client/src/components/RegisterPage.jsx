@@ -25,10 +25,12 @@ const RegisterPage = () => {
     if (response.status === 200) {
       toast.success("You have successfully registered.");
       setRedirect(true);
+      setTimeout(() => {
+        toast.success("Login with your credentials.");
+      }, 1500);
     } else {
       let data = await response.json();
       toast.error(data ? data.errors : "Regsitration failed.");
-      console.log(data);
     }
   }
 

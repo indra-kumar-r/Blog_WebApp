@@ -22,7 +22,7 @@ const LoginPage = () => {
     let response = await fetch("http://localhost:9000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username: username.trim(), password }),
       credentials: "include",
     });
     if (response.ok) {

@@ -15,13 +15,8 @@ const LikePost = ({ id, user }) => {
     <i className="bi bi-heart"></i>
   );
 
-  console.log("checking one: ", Object.keys(userInfo).length, disabled);
-  console.log("val: ", userInfo);
-
   useEffect(() => {
-    console.log("changed");
     if (Object.keys(userInfo).length) {
-      console.log("user online");
       setDisable(false);
       fetch(`http://localhost:9000/likepost?postId=${id}`)
         .then((response) => response.json())
@@ -35,11 +30,10 @@ const LikePost = ({ id, user }) => {
           console.log(error);
         });
     } else if (!Object.keys(userInfo).length) {
+      setLikeStatus(false);
       setDisable(true);
     }
   }, [id, userInfo]);
-
-  console.log("checking two: ", disabled, user);
 
   const toggleLike = async () => {
     if (disabled) {

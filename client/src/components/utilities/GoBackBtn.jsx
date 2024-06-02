@@ -1,12 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const GoBackBtn = () => {
+  let navigate = useNavigate();
   return (
     <Main>
-      <span
-        className="text-secondary fs-6"
-        onClick={() => window.history.back()}
-      >
+      <span className="text-secondary fs-6" onClick={() => navigate(-2)}>
         Go back <i className="bi bi-arrow-left-circle"></i>
       </span>
     </Main>

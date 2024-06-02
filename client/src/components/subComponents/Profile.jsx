@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import styled from "styled-components";
-import { FaRegUserCircle } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 const Profile = () => {
@@ -35,14 +34,13 @@ const Profile = () => {
         <ul className="dropdown-menu p-0 overflow-hidden">
           <li>
             <Link className="py-2" to={"/profile"}>
-              {/* <FaRegUserCircle size={20} className="me-2 text-black" />{" "} */}
               <span className="text-warning">Profile</span>
             </Link>
           </li>
-          <li>
-            <a className="bg-secondary py-2 text-light">
+          <li data-bs-toggle="modal" data-bs-target="#resetPassword">
+            <a className="bg-secondary p-2 text-light">
               <i className="bi bi-key me-2 text-white fs-5"></i>
-              <span> Reset Password</span>
+              <span>Reset Password</span>
             </a>
           </li>
           <li>

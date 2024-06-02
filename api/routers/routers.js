@@ -21,4 +21,6 @@ router.post("/likepost", controller.p_like);
 router.get(`/likepost`, controller.g_like);
 router.delete("/likepost", controller.d_like);
 
+router.put("/resetpassword", controller.u_pwd);
+
 module.exports = router;

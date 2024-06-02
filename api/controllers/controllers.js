@@ -10,6 +10,8 @@ let jwtSalt = "1q@2w#3e$4r5%";
 
 mongoose.connect("mongodb://localhost:27017/BlogWebApp");
 
+// registration
+
 module.exports.register = async (req, res) => {
   let { username, password } = req.body;
   try {
@@ -30,6 +32,8 @@ module.exports.register = async (req, res) => {
     }
   }
 };
+
+// login and logout
 
 module.exports.login = async (req, res) => {
   let { username, password } = req.body;
@@ -52,6 +56,12 @@ module.exports.login = async (req, res) => {
   }
 };
 
+module.exports.logout = (req, res) => {
+  res.cookie("token", "").json("ok");
+};
+
+// get user details
+
 module.exports.profile = (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, jwtSalt, {}, (err, info) => {
@@ -59,6 +69,8 @@ module.exports.profile = (req, res) => {
     res.json(info);
   });
 };
+
+// CRUD and other options for post
 
 module.exports.p_post = async (req, res) => {
   const { title, summary, content, cover } = req.body;
@@ -156,10 +168,6 @@ module.exports.g_post_id = async (req, res) => {
   }
 };
 
-module.exports.logout = (req, res) => {
-  res.cookie("token", "").json("ok");
-};
-
 // like post
 
 module.exports.p_like = async (req, res) => {
@@ -190,5 +198,18 @@ module.exports.d_like = async (req, res) => {
     res.status(200).json({ delete: "success" });
   } catch (error) {
     res.status(400).json({ error: error, delete: "failed" });
+  }
+};
+
+// reset password
+
+module.exports.u_pwd = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    let pwd = bcrypt.hashSync(password, salt);
+    let data = await User.updateOne({ username }, { $set: { password: pwd } });
+    res.status(200).json({ data: data, message: "success" });
+  } catch (error) {
+    res.status(400).json({ error: error, message: "failed" });
   }
 };

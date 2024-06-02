@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { format } from "date-fns";
 import ReactHtmlParser from "@orrisroot/react-html-parser";
@@ -8,6 +8,7 @@ import Spinner from "./utilities/Spinner";
 import NotFound from "./NotFound";
 import LikePost from "./subComponents/LikePost";
 import { UserContext } from "./UserContext";
+import GlowFont from "./utilities/GlowFont";
 
 const PostPage = () => {
   let [postInfo, setPostInfo] = useState(null);
@@ -56,8 +57,22 @@ const PostPage = () => {
           <div className="postHeader">
             <h3>{postInfo.title}</h3>
             <span className="text-secondary">
-              <h4>{postInfo.author.username}, </h4>
-              <h5>{format(new Date(postInfo.updatedAt), "MMM dd, yyyy")}</h5>
+              <h4>
+                <Link
+                  to={`/user/${postInfo.author.username}`}
+                  className="text-text-decoration-none d-flex gap-1"
+                >
+                  <i className="bi bi-arrow-up-right-circle fs-6"></i>
+                  <GlowFont
+                    text={postInfo.author.username}
+                    font={1}
+                    custom={0.05}
+                  />
+                </Link>
+              </h4>
+              <h5 className="ms-2">
+                {format(new Date(postInfo.updatedAt), "MMM dd, yyyy")}
+              </h5>
             </span>
           </div>
           <div className="postImg">
@@ -112,7 +127,11 @@ let PostData = styled.div`
       font-family: "Times New Roman", Times, serif;
 
       h4 {
-        text-transform: capitalize;
+        a {
+          text-transform: capitalize;
+          text-decoration: none;
+          color: purple;
+        }
       }
     }
   }

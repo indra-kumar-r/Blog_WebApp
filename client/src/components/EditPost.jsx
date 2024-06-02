@@ -154,7 +154,7 @@ const EditPost = () => {
 
         <div className="btns d-flex gap-3">
           <button title="update post" className="btn btn-warning" type="submit">
-            <i class="bi bi-box-arrow-up fs-4"></i>
+            <i className="bi bi-box-arrow-up fs-4"></i>
           </button>
           <button
             title="delete post"
@@ -162,7 +162,7 @@ const EditPost = () => {
             type="button"
             onClick={() => deletePost(id)}
           >
-            <i class="bi bi-trash3 fs-4"></i>
+            <i className="bi bi-trash3 fs-4"></i>
           </button>
         </div>
       </Form>

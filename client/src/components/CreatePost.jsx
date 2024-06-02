@@ -129,7 +129,7 @@ const CreatePost = () => {
           className="btn btn-success px-3"
           type="submit"
         >
-          <i class="bi bi-arrow-up-circle fs-4"></i>
+          <i className="bi bi-arrow-up-circle fs-4"></i>
         </button>
       </Form>
     </>
