@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import styled from "styled-components";
 import toast from "react-hot-toast";
+import ProfileBtn from "../utilities/ProfileBtn";
 
 const Profile = () => {
   let { userInfo, setUserInfo } = useContext(UserContext);
@@ -24,12 +25,12 @@ const Profile = () => {
     <ProfileWrapper>
       <div className="dropdown">
         <button
-          className="btn dropdown-toggle"
+          className="btn m-0 p-0"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Profile
+          <ProfileBtn userName={userInfo.username} />
         </button>
         <ul className="dropdown-menu p-0 overflow-hidden">
           <li>

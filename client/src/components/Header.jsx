@@ -7,7 +7,6 @@ import Nav from "./utilities/Nav";
 
 const Header = () => {
   let { userInfo, setUserInfo } = useContext(UserContext);
-
   useEffect(() => {
     fetch("http://localhost:9000/profile", {
       credentials: "include",

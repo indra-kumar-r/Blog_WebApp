@@ -8,6 +8,7 @@ router.post("/login", controller.login);
 router.post("/logout", controller.logout);
 
 router.get("/profile", controller.profile);
+router.get("/user", controller.g_user);
 
 router.post("/post", controller.p_post);
 router.get("/post", controller.g_post);

@@ -66,8 +66,18 @@ module.exports.profile = (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, jwtSalt, {}, (err, info) => {
     if (err) throw err;
-    res.json(info);
+    res.status(200).json(info);
   });
+};
+
+module.exports.g_user = async (req, res) => {
+  const { username } = req.query;
+  try {
+    let data = await User.findOne({ username });
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json(error);
+  }
 };
 
 // CRUD and other options for post

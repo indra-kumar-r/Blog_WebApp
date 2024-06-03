@@ -29,6 +29,7 @@ const LoginPage = () => {
       response.json().then((userInfo) => {
         toast.success("You have successfully logged in.");
         setUserInfo(userInfo);
+        // localStorage.setItem("userInfo", JSON.stringify(userInfo));
         setRedirect(true);
       });
     } else {
