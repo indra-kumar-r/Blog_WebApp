@@ -60,7 +60,7 @@ module.exports.logout = (req, res) => {
   res.cookie("token", "").json("ok");
 };
 
-// get user details
+// user details
 
 module.exports.profile = (req, res) => {
   const { token } = req.cookies;
@@ -75,6 +75,16 @@ module.exports.g_user = async (req, res) => {
   try {
     let data = await User.findOne({ username });
     res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+module.exports.u_userimage = async (req, res) => {
+  const { userimage, username } = req.body;
+  try {
+    await User.updateOne({ username }, { $set: { userimage } });
+    res.status(200).json({ message: "success" });
   } catch (error) {
     res.status(400).json(error);
   }

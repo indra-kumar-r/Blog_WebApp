@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Posts from "./Posts";
 import { UserContext } from "./UserContext";
 import styled from "styled-components";
+import Spinner from "./utilities/Spinner";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -19,11 +20,25 @@ const HomePage = () => {
   }, [userInfo, setPosts]);
 
   return (
-    <Main>
-      {posts.map((post) => (
-        <Posts key={post._id} post={post} />
-      ))}
-    </Main>
+    <>
+      {posts.length ? (
+        <Main>
+          {posts.map((post) => (
+            <Posts key={post._id} post={post} />
+          ))}
+        </Main>
+      ) : (
+        <Main
+          className="d-flex justify-content-center align-items-center"
+          style={{
+            width: "60%",
+            height: "50vh",
+          }}
+        >
+          <Spinner />
+        </Main>
+      )}
+    </>
   );
 };
 

@@ -42,39 +42,72 @@ const RegisterPage = () => {
     <>
       <FormContainer>
         <div className="formTitle">Register</div>
-        <FormOutline className="register" onSubmit={register}>
-          <FormSection>
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              ref={inputFocus}
+        <div className="row">
+          <div className="col d-flex justify-content-center align-items-center">
+            <img
+              src="https://img.freepik.com/premium-vector/data-security-concept-illustration_251005-467.jpg?w=826"
+              className="img-fluid"
             />
-          </FormSection>
-          <FormSection>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </FormSection>
-          <FormSection>
-            <Button type="submit">Register</Button>
-          </FormSection>
-          <div className="links">
-            <Link to="/login">Login</Link>
           </div>
-        </FormOutline>
+          <div className="col d-flex justify-content-center align-items-center">
+            <FormOutline className="register" onSubmit={register}>
+              <FormSection>
+                <div className="d-flex" style={{ width: "100%" }}>
+                  <label htmlFor="username">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    ref={inputFocus}
+                  />
+                  <span
+                    className="custom d-flex align-items-end justify-content-center"
+                    onClick={() => {
+                      toast((t) => (
+                        <span
+                          className="text-black"
+                          style={{ textAlign: "center" }}
+                        >
+                          <i class="bi bi-exclamation-triangle-fill text-warning"></i>{" "}
+                          Once you register with your chosen username, you will
+                          not be able to change it later. Please make sure to
+                          select your username carefully.
+                        </span>
+                      ));
+                    }}
+                  >
+                    <i class="bi bi-info-circle-fill text-warning"></i>
+                  </span>
+                </div>
+              </FormSection>
+              <FormSection>
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </FormSection>
+              <FormSection>
+                <Button type="submit">Register</Button>
+              </FormSection>
+              <div className="links">
+                <span className="text-secondary">
+                  Already have an account?{" "}
+                </span>
+                <Link to="/login">Sign in</Link>
+              </div>
+            </FormOutline>
+          </div>
+        </div>
       </FormContainer>
     </>
   );
@@ -84,7 +117,7 @@ export default RegisterPage;
 
 let FormContainer = styled.div`
   margin-top: 7.5rem;
-  width: 30%;
+  width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,6 +127,16 @@ let FormContainer = styled.div`
   box-shadow: 0 0 0.25rem plum;
   border-radius: 0.25rem;
   text-align: center;
+
+  .row {
+    width: 100%;
+
+    .col {
+      img {
+        transform: scaleX(1.05);
+      }
+    }
+  }
 
   @media screen and (max-width: 800px) {
     width: 50%;
@@ -124,19 +167,19 @@ let FormOutline = styled.form`
   .links {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 
     a {
       text-decoration: none;
-      color: #09813d;
-      padding-bottom: 0.25rem;
+      color: black;
+      padding-left: 0.25rem;
       border-bottom: 0.05rem solid transparent;
       outline: none;
       transition: all 0.2s ease-in-out;
 
-      &:focus {
-        border-bottom: 0.25rem solid plum;
+      &:hover {
+        border-bottom: 0.05rem solid black;
       }
     }
   }
@@ -150,6 +193,13 @@ let FormSection = styled.div`
   align-items: center;
   flex-direction: column;
   margin: 0.5rem 0;
+
+  .custom {
+    cursor: pointer;
+    position: absolute;
+    right: 2.5%;
+    bottom: 25%;
+  }
 
   label {
     position: absolute;

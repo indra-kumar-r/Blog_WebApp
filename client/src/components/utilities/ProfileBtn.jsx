@@ -4,8 +4,7 @@ import { styled } from "styled-components";
 import GlowFont from "./GlowFont";
 
 const ProfileBtn = ({ userName }) => {
-  // let [user, setUser] = useState("");
-  // let { userInfo } = useContext(UserContext);
+  let [user, setUser] = useState("");
   let [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -14,8 +13,8 @@ const ProfileBtn = ({ userName }) => {
         fetch(`http://localhost:9000/user?username=${userName}`)
           .then((response) => response.json())
           .then((data) => {
-            // setUser(data);
             if (data) {
+              setUser(data);
               setImage(data.userimage);
             }
           });
@@ -24,7 +23,7 @@ const ProfileBtn = ({ userName }) => {
       }
     }
     getUser();
-  }, []);
+  }, [user]);
 
   if (!image) {
     let firstLetter = userName[0];
@@ -40,11 +39,7 @@ const ProfileBtn = ({ userName }) => {
   return (
     <>
       <>
-        {image && (
-          <Pic title={userName}>
-            <img src={image} />
-          </Pic>
-        )}
+        {image && <ProfileImage title={userName} $image={image}></ProfileImage>}
       </>
     </>
   );
@@ -95,10 +90,21 @@ let Pic = styled.div`
     font-family: "Times New Roman", Times, serif;
     font-size: 1.5rem;
   }
+`;
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+let ProfileImage = styled.div`
+  border-radius: 50%;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  max-width: 2.5rem;
+  max-height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 0.25rem plum;
+  overflow: hidden;
+  background-image: url(${(props) => props.$image});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;

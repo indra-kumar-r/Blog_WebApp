@@ -45,41 +45,52 @@ const LoginPage = () => {
     <>
       <FormContainer>
         <div className="formTitle">LOGIN</div>
-        <FormOutline className="login" onSubmit={login}>
-          <FormSection>
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              autoComplete="off"
-              required
-              placeholder="Username"
-              ref={inputFocus}
+        <div className="row">
+          <div className="col d-flex justify-content-center align-items-center">
+            <img
+              src="https://img.freepik.com/premium-vector/security-password-concept-illustration_251005-470.jpg?w=826"
+              className="img-fluid"
             />
-          </FormSection>
-          <FormSection>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="off"
-              required
-              placeholder="Password"
-            />
-          </FormSection>
-          <FormSection>
-            <Button type="submit">Login</Button>
-          </FormSection>
-          <div className="links">
-            <Link to="/register">Register</Link>
           </div>
-        </FormOutline>
+          <div className="col d-flex justify-content-center align-items-center">
+            <FormOutline className="login" onSubmit={login}>
+              <FormSection>
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="off"
+                  required
+                  placeholder="Username"
+                  ref={inputFocus}
+                />
+              </FormSection>
+              <FormSection>
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="off"
+                  required
+                  placeholder="Password"
+                />
+              </FormSection>
+              <FormSection>
+                <Button type="submit">Login</Button>
+              </FormSection>
+              <div className="links">
+                <Link to="/forgotpassword">forgot password</Link>
+                <Link to="/register">register</Link>
+              </div>
+            </FormOutline>
+          </div>
+        </div>
       </FormContainer>
     </>
   );
@@ -89,7 +100,7 @@ export default LoginPage;
 
 let FormContainer = styled.div`
   margin-top: 7.5rem;
-  width: 30%;
+  width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,6 +110,16 @@ let FormContainer = styled.div`
   box-shadow: 0 0 0.25rem plum;
   border-radius: 0.25rem;
   text-align: center;
+
+  .row {
+    width: 100%;
+
+    .col {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
 
   @media screen and (max-width: 800px) {
     width: 50%;
@@ -129,19 +150,20 @@ let FormOutline = styled.form`
   .links {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 
     a {
       text-decoration: none;
-      color: #09813d;
-      padding-bottom: 0.25rem;
+      color: darkgray;
+      padding-bottom: 0.01rem;
       border-bottom: 0.05rem solid transparent;
       outline: none;
-      transition: all 0.2s ease-in-out;
+      transition: all 0.5s;
 
-      &:focus {
-        border-bottom: 0.25rem solid plum;
+      &:hover {
+        color: black;
+        border-bottom: 0.05rem solid black;
       }
     }
   }
