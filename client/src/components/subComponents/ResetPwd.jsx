@@ -62,10 +62,10 @@ const ResetPwd = () => {
                 <i className="bi bi-x-circle fs-5" style={{ color: "red" }}></i>
               </button>
             </div>
-            <div className="modal-body m-2 ps-5 pe-5 pt-3 pb-3">
+            <div className="modal-body m-2 ps-md-5 pe-md-5 pt-3 pb-3">
               <div className="customRow d-flex gap-2">
                 <div
-                  className="customColumn d-flex justify-content-center align-items-center"
+                  className="customColumn d-none d-sm-flex justify-content-center align-items-center"
                   style={{ width: "25%" }}
                 >
                   <img
@@ -73,7 +73,7 @@ const ResetPwd = () => {
                     className="img-fluid"
                   />
                 </div>
-                <div className="customColumn" style={{ width: "75%" }}>
+                <div className="customColumn" style={{ width: "100%" }}>
                   <input
                     type="password"
                     className="form-control py-2"

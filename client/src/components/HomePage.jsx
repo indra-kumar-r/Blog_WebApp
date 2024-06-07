@@ -47,4 +47,9 @@ export default HomePage;
 let Main = styled.div`
   width: 60%;
   margin-top: 7.5rem;
+  transition: all 0.25s ease-in-out;
+
+  @media screen and (max-width: 750px) {
+    width: 90%;
+  }
 `;

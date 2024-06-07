@@ -99,14 +99,18 @@ let PostCards = styled.div`
   margin-top: 7.5rem;
   width: 60%;
   display: grid;
-  /* grid-template-columns: repeat(auto-fill, minmax(calc(30% - 1rem), 1fr)); */
   grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
   gap: 1rem;
   padding-bottom: 1rem;
+  transition: all 0.2s ease-in-out;
 
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  @media screen and (max-width: 750px) {
+    width: 90%;
   }
 `;
 

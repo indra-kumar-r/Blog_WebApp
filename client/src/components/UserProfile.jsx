@@ -61,93 +61,84 @@ const UserProfile = () => {
     <>
       {user ? (
         <Wrapper>
-          <div className="sectionOne">
-            <div
-              className="profileImage"
+          <div
+            className="profileImage"
+            data-bs-toggle="modal"
+            data-bs-target="#editUserImage"
+            style={{
+              cursor: "pointer",
+            }}
+            title="Change your Image."
+          >
+            <img
+              src={
+                user.userimage
+                  ? user.userimage
+                  : "https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png"
+              }
+            />
+          </div>
+          <div className="user_details d-flex flex-column gap-2 p-2">
+            <span className="bg-dark text-light text-center">
+              {user.username}
+            </span>
+            <span>
+              <i className="bi bi-info-circle text-secondary"></i>{" "}
+              {user.usertagline ? (
+                user.usertagline
+              ) : (
+                <span className="text-secondary">Add tagline</span>
+              )}
+            </span>
+            <span>
+              <i className="bi bi-geo-alt text-secondary"></i>{" "}
+              {user.userlocation ? (
+                user.userlocation
+              ) : (
+                <span className="text-secondary">Add location</span>
+              )}
+            </span>
+            <div>
+              <span className="text-light">
+                <i className="bi bi-people text-secondary"></i>
+                <span className="text-secondary">following</span>
+                {user.userfollowing ? user.userfollowing : "0"}
+              </span>
+              <span className="text-light">
+                <i className="bi bi-people-fill text-secondary"></i>
+                <span className="text-secondary">followers</span>
+                {user.userfollowers ? user.userfollowers : "0"}
+              </span>
+            </div>
+            <div>
+              <span className="text-light">
+                <i className="bi bi-heart-fill text-secondary"></i>
+                <span className="text-secondary">liked</span>
+                {user.userliked ? user.userliked : "0"}
+              </span>
+              <span className="text-light">
+                <i className="bi bi-bookmark text-secondary"></i>
+                <span className="text-secondary">saved</span>
+                {user.usersaved ? user.usersaved : "0"}
+              </span>
+            </div>
+            <span className="text-white">
+              <span className="text-secondary">Active since:</span>{" "}
+              {user.createdAt
+                ? moment(user.createdAt).format("MMM Do YY")
+                : "-- -- ----"}
+            </span>
+            <span
+              className="p-0 btn btn-dark py-1 px-3"
               data-bs-toggle="modal"
-              data-bs-target="#editUserImage"
+              data-bs-target="#editUserInfo"
               style={{
+                maxWidth: "100%",
                 cursor: "pointer",
               }}
-              title="Change your Image."
             >
-              <img
-                src={
-                  user.userimage
-                    ? user.userimage
-                    : "https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png"
-                }
-              />
-            </div>
-            <div className="user_details d-flex flex-column gap-2 p-2">
-              <span className="bg-dark text-light text-center">
-                {user.username}
-              </span>
-              <span>
-                <i className="bi bi-info-circle text-secondary"></i>{" "}
-                {user.usertagline ? (
-                  user.usertagline
-                ) : (
-                  <span className="text-secondary">Add tagline</span>
-                )}
-              </span>
-              <span>
-                <i className="bi bi-geo-alt text-secondary"></i>{" "}
-                {user.userlocation ? (
-                  user.userlocation
-                ) : (
-                  <span className="text-secondary">Add location</span>
-                )}
-              </span>
-              <span>
-                <span>
-                  <i className="bi bi-people text-secondary"></i>
-                  <span className="text-secondary">following</span>
-                  {user.userfollowing ? user.userfollowing : "0"}
-                </span>
-                <span>
-                  <i className="bi bi-people-fill text-secondary"></i>
-                  <span className="text-secondary">followers</span>
-                  {user.userfollowers ? user.userfollowers : "0"}
-                </span>
-              </span>
-              <span>
-                <span>
-                  <i className="bi bi-heart-fill text-secondary"></i>
-                  <span className="text-secondary">liked</span>
-                  {user.userliked ? user.userliked : "0"}
-                </span>
-                <span>
-                  <i className="bi bi-bookmark text-secondary"></i>
-                  <span className="text-secondary">saved</span>
-                  {user.usersaved ? user.usersaved : "0"}
-                </span>
-              </span>
-              <span className="text-secondary">
-                Active since:{" "}
-                {user.createdAt
-                  ? moment(user.createdAt).format("MMM Do YY")
-                  : "-- -- ----"}
-              </span>
-              <span
-                className="p-0 btn btn-dark"
-                data-bs-toggle="modal"
-                data-bs-target="#editUserInfo"
-                style={{
-                  maxWidth: "100%",
-                  cursor: "pointer",
-                }}
-              >
-                Edit details <i className="bi bi-pencil-square"></i>
-              </span>
-            </div>
-          </div>
-          <div className="sectionTwo">
-            <SyncLoader color="#36d7b7" size={5} />
-            Stats will be displayed soon.
-          </div>
-          <div className="sectionThree">
-            <ClockLoader color="#36d7b7" size={25} /> No Recent Acitivity
+              Edit details <i className="bi bi-pencil-square"></i>
+            </span>
           </div>
         </Wrapper>
       ) : (
@@ -251,8 +242,16 @@ const UserProfile = () => {
                   <i className="bi bi-x-circle text-white fs-5"></i>
                 </button>
               </span>
-              <div className="row mb-3">
-                <div className="col d-flex justify-content-between align-items-center">
+              <div className="row mb-3 flex-column justify-content-center align-items-center">
+                <div
+                  className="col d-flex justify-content-center   align-items-center bg-secondary"
+                  style={{
+                    width: "15rem",
+                    minHeight: "15rem",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                  }}
+                >
                   <img
                     src={
                       user && user.userimage
@@ -263,7 +262,11 @@ const UserProfile = () => {
                         ? userImage
                         : "https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png"
                     }
-                    alt=""
+                    style={{
+                      minWidth: "15rem",
+                      height: "15rem",
+                      objectFit: "cover",
+                    }}
                     className="img-fluid"
                   />
                 </div>
@@ -297,77 +300,54 @@ const UserProfile = () => {
 export default UserProfile;
 
 let Wrapper = styled.div`
+  background-color: black;
   margin-top: 7.5rem;
   width: 60%;
   height: 35rem;
   border-radius: 0.25rem;
   box-shadow: 0 0 0.25rem black;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: scroll;
 
-  .sectionOne {
-    width: 100%;
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 3;
-    background-color: black;
-    color: white;
+  .profileImage {
+    width: 15rem;
+    max-height: 15rem;
     overflow: hidden;
+    padding: 0.5rem;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
 
-    .profileImage {
-      background-color: black;
+    img {
       width: 100%;
-      height: 40%;
-      overflow: hidden;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 0.5rem white;
+
+      &:hover {
+        box-shadow: 0 0 1rem white;
+      }
+    }
+  }
+
+  .user_details {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
       padding: 0.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      img {
-        width: 80%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-    }
-
-    .user_details {
-      width: 100%;
-
-      span {
-        padding: 0.5rem;
-      }
     }
   }
 
-  .sectionTwo {
-    grid-column: 2 / span 2;
-    grid-row: 1 / span 1;
-    width: 100%;
-    background-color: #0e0e0e;
-    color: #656565;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    overflow: hidden;
-  }
-
-  .sectionThree {
-    grid-column: 2 / span 2;
-    grid-row: 2 / span 2;
-    width: 100%;
-    background-color: #151414;
-    color: #656565;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
+  @media screen and (max-width: 750px) {
+    width: 90%;
   }
 `;

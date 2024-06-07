@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "name": "blogapp",
+  "version": "1.0.0",
+  "description": "Mern stack application.",
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
+  "keywords": [],
+  "author": "Indra_Kumar_R",
+  "license": "ISC"
+}

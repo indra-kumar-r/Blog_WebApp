@@ -13,7 +13,6 @@ import GlowFont from "./utilities/GlowFont";
 const PostPage = () => {
   let [postInfo, setPostInfo] = useState(null);
   let { id } = useParams();
-  let [loader, setLoader] = useState(true);
   let { userInfo } = useContext(UserContext);
 
   useEffect(() => {
@@ -24,25 +23,7 @@ const PostPage = () => {
       });
   }, [id]);
 
-  useEffect(() => {
-    let spinnerTime = setTimeout(() => {
-      setLoader(false);
-    }, 750);
-
-    return () => clearTimeout(spinnerTime);
-  }, []);
-
-  if (loader) {
-    return (
-      <>
-        <PostData className="spinnerDiv">
-          <Spinner />
-        </PostData>
-      </>
-    );
-  }
-
-  if (postInfo.message === "NotFound") return <NotFound />;
+  if (postInfo && postInfo.message === "NotFound") return <NotFound />;
 
   return (
     <>
@@ -81,7 +62,16 @@ const PostPage = () => {
           <div className="postContent">{ReactHtmlParser(postInfo.content)}</div>
         </PostData>
       ) : (
-        <NotFound />
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{
+            marginTop: "7.5rem",
+            width: "60%",
+            height: "50vh",
+          }}
+        >
+          <Spinner />
+        </div>
       )}
     </>
   );
@@ -166,5 +156,9 @@ let PostData = styled.div`
       object-fit: cover;
       border-radius: 0.25rem;
     }
+  }
+
+  @media screen and (max-width: 750px) {
+    width: 90%;
   }
 `;

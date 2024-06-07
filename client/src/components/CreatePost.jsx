@@ -143,7 +143,7 @@ let Form = styled.form`
   width: 60%;
   height: 35rem;
   box-shadow: 0 0 0.25rem black;
-  padding: 1rem 2rem;
+  padding: 1rem 0.1rem;
   border-radius: 0.25rem;
   display: flex;
   justify-content: space-around;
@@ -151,9 +151,11 @@ let Form = styled.form`
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
 
   .row {
+    width: 100%;
+
     .bi-arrow-clockwise {
       background-color: #39ef88;
       padding: 0.25rem 0.5rem;
@@ -167,10 +169,9 @@ let Form = styled.form`
       }
     }
 
-    width: 100%;
-
     .col {
       justify-content: flex-start;
+      min-width: 50%;
     }
   }
 
@@ -210,15 +211,22 @@ let Form = styled.form`
       }
     }
   }
+
+  @media screen and (max-width: 750px) {
+    width: 90%;
+
+    .row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
 `;
 
 let StyledReactQuill = styled(ReactQuill)`
   .ql-container {
     border-radius: 0.25rem;
-    min-width: 25rem;
-    max-width: 25rem;
-    min-height: 15rem;
-    max-height: 15rem;
+    width: 100%;
+    height: 15rem;
     overflow-y: auto;
   }
 
@@ -229,5 +237,6 @@ let StyledReactQuill = styled(ReactQuill)`
   .ql-editor {
     max-width: 100%;
     height: 100%;
+    text-align: justify;
   }
 `;
