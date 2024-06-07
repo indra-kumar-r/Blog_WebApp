@@ -90,6 +90,16 @@ module.exports.u_userimage = async (req, res) => {
   }
 };
 
+module.exports.u_usertagloc = async (req, res) => {
+  const { usertagline, userlocation, username } = req.body;
+  try {
+    await User.updateOne({ username }, { $set: { usertagline, userlocation } });
+    res.status(200).json({ message: "success" });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 // CRUD and other options for post
 
 module.exports.p_post = async (req, res) => {

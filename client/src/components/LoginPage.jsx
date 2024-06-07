@@ -29,7 +29,6 @@ const LoginPage = () => {
       response.json().then((userInfo) => {
         toast.success("You have successfully logged in.");
         setUserInfo(userInfo);
-        // localStorage.setItem("userInfo", JSON.stringify(userInfo));
         setRedirect(true);
       });
     } else {
@@ -46,7 +45,7 @@ const LoginPage = () => {
       <FormContainer>
         <div className="formTitle">LOGIN</div>
         <div className="row">
-          <div className="col d-flex justify-content-center align-items-center">
+          <div className="col d-none d-lg-flex justify-content-center align-items-center">
             <img
               src="https://img.freepik.com/premium-vector/security-password-concept-illustration_251005-470.jpg?w=826"
               className="img-fluid"
@@ -121,8 +120,12 @@ let FormContainer = styled.div`
     }
   }
 
-  @media screen and (max-width: 800px) {
-    width: 50%;
+  @media screen and (max-width: 750px) {
+    width: 90%;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 0.25rem;
   }
 
   .formTitle {

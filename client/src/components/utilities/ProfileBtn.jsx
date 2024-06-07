@@ -23,7 +23,7 @@ const ProfileBtn = ({ userName }) => {
       }
     }
     getUser();
-  }, [user]);
+  }, [image]);
 
   if (!image) {
     let firstLetter = userName[0];

@@ -10,6 +10,7 @@ router.post("/logout", controller.logout);
 router.get("/profile", controller.profile);
 router.get("/user", controller.g_user);
 router.put("/userimage", controller.u_userimage);
+router.put("/usertagloc", controller.u_usertagloc);
 
 router.post("/post", controller.p_post);
 router.get("/post", controller.g_post);

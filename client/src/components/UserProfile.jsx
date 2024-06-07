@@ -3,15 +3,17 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 import Spinner from "./utilities/Spinner";
-import { ClockLoader, SyncLoader, PacmanLoader } from "react-spinners";
 import { toast } from "react-hot-toast";
 import moment from "moment";
 
 const UserProfile = () => {
-  let [user, setUser] = useState("");
+  let [user, setUser] = useState(null);
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
   let [userImage, setUserImage] = useState("");
+  let [userTagline, setUserTagline] = useState(null);
+  let [userLocation, setUserLocation] = useState(null);
+  let [updateTrigger, setUpdateTrigger] = useState(false);
 
   useEffect(() => {
     if (userInfo === null || Object.keys(userInfo).length === 0) {
@@ -34,7 +36,7 @@ const UserProfile = () => {
       }
     }
     getUser();
-  }, [userInfo, navigate, user]);
+  }, [userInfo, updateTrigger]);
 
   const editUserImage = () => {
     if (userImage === "") {
@@ -47,6 +49,7 @@ const UserProfile = () => {
     })
       .then((response) => {
         if (response.ok) {
+          setUpdateTrigger((prev) => !prev);
           toast.success("Profile image updated successfully!");
           setUserImage("");
         }
@@ -55,6 +58,32 @@ const UserProfile = () => {
         toast.error("Failed to update profile image. Please try again.");
         console.log(error);
       });
+  };
+
+  const editUserDeatils = (e) => {
+    e.preventDefault();
+    try {
+      fetch(`http://localhost:9000/usertagloc`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: userInfo.username,
+          usertagline: userTagline,
+          userlocation: userLocation,
+        }),
+      }).then((response) => {
+        response.json();
+        if (response.ok) {
+          setUpdateTrigger((prev) => !prev);
+          toast.success("User deatils updated successfully!");
+          setUserTagline("");
+          setUserLocation("");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed!");
+    }
   };
 
   return (
@@ -82,17 +111,17 @@ const UserProfile = () => {
             <span className="bg-dark text-light text-center">
               {user.username}
             </span>
-            <span>
+            <span className="text-light">
               <i className="bi bi-info-circle text-secondary"></i>{" "}
-              {user.usertagline ? (
+              {user.usertagline.trim() ? (
                 user.usertagline
               ) : (
                 <span className="text-secondary">Add tagline</span>
               )}
             </span>
-            <span>
+            <span className="text-light">
               <i className="bi bi-geo-alt text-secondary"></i>{" "}
-              {user.userlocation ? (
+              {user.userlocation.trim() ? (
                 user.userlocation
               ) : (
                 <span className="text-secondary">Add location</span>
@@ -164,55 +193,60 @@ const UserProfile = () => {
       >
         <div className="modal-dialog">
           <div className="modal-content bg-dark text-light">
-            {/* <div className="modal-header">
-              <h1 className="modal-title fs-5" id="editUserInfoLabel">
-                Modal title
+            <div className="modal-header justify-content-between">
+              <h1
+                className="modal-title text-warning fs-5"
+                id="editUserInfoLabel"
+              >
+                Edit Details
               </h1>
-              <button
-                type="button"
-                className="btn"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                <i className="bi bi-x-circle text-light"></i>
-              </button>
-            </div> */}
-            <div className="modal-body d-flex justify-content-end align-items-center flex-column ">
-              <div
-                className="p-0 d-flex justify-content-end align-items-center"
-                style={{ width: "100%" }}
-              >
-                <button
-                  type="button"
-                  className="btn p-0 m-0"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  style={{
-                    border: "none",
-                    outline: "none",
-                  }}
-                >
-                  <i className="bi bi-x-circle text-light fs-4"></i>
-                </button>
+              <div type="button" data-bs-dismiss="modal" aria-label="Close">
+                <i className="bi bi-x-circle fs-5 text-light"></i>
               </div>
-              <PacmanLoader color="#36d7b7" />
-              <span className="pt-4">Server down. Try after some time.</span>
             </div>
-            {/* <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
+            <div className="modal-body d-flex justify-content-end align-items-center flex-column ">
+              <form
+                onSubmit={editUserDeatils}
+                className="d-flex justify-content-center
+              align-items-center flex-column"
+                style={{
+                  width: "100%",
+                }}
               >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Understood
-              </button>
-            </div> */}
+                <input
+                  type="text"
+                  className="form-control p-3 my-1"
+                  placeholder="Enter the tageline.."
+                  value={userTagline}
+                  onChange={(e) => setUserTagline(e.target.value)}
+                  style={{
+                    outline: "none",
+                    boxShadow: "none",
+                  }}
+                  required
+                />
+                <input
+                  type="text"
+                  className="form-control p-3 my-1"
+                  placeholder="Enter your location..."
+                  value={userLocation}
+                  onChange={(e) => setUserLocation(e.target.value)}
+                  style={{
+                    outline: "none",
+                    boxShadow: "none",
+                  }}
+                  required
+                />
+
+                <button className="btn btn-warning mt-2 px-3 fw-bold text-light">
+                  {"Save"}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
+
       <div
         className="modal fade"
         id="editUserImage"
@@ -244,7 +278,7 @@ const UserProfile = () => {
               </span>
               <div className="row mb-3 flex-column justify-content-center align-items-center">
                 <div
-                  className="col d-flex justify-content-center   align-items-center bg-secondary"
+                  className="col d-flex justify-content-center align-items-center bg-secondary"
                   style={{
                     width: "15rem",
                     minHeight: "15rem",
@@ -314,7 +348,9 @@ let Wrapper = styled.div`
   overflow-y: scroll;
 
   .profileImage {
-    width: 15rem;
+    min-width: 15rem;
+    max-width: 15rem;
+    min-height: 15rem;
     max-height: 15rem;
     overflow: hidden;
     padding: 0.5rem;

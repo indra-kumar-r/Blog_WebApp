@@ -17,7 +17,7 @@ let CustomLink = styled.div`
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
   font-size: ${(props) => props.$font}rem;
-  text-align: justify;
+  text-align: center;
   text-transform: uppercase;
   display: flex;
   justify-content: center;

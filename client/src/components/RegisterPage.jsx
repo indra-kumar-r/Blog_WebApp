@@ -43,7 +43,7 @@ const RegisterPage = () => {
       <FormContainer>
         <div className="formTitle">Register</div>
         <div className="row">
-          <div className="col d-flex justify-content-center align-items-center">
+          <div className="col d-none d-lg-flex justify-content-center align-items-center">
             <img
               src="https://img.freepik.com/premium-vector/data-security-concept-illustration_251005-467.jpg?w=826"
               className="img-fluid"
@@ -72,7 +72,7 @@ const RegisterPage = () => {
                           className="text-black"
                           style={{ textAlign: "center" }}
                         >
-                          <i class="bi bi-exclamation-triangle-fill text-warning"></i>{" "}
+                          <i className="bi bi-exclamation-triangle-fill text-warning"></i>{" "}
                           Once you register with your chosen username, you will
                           not be able to change it later. Please make sure to
                           select your username carefully.
@@ -80,7 +80,7 @@ const RegisterPage = () => {
                       ));
                     }}
                   >
-                    <i class="bi bi-info-circle-fill text-warning"></i>
+                    <i className="bi bi-info-circle-fill text-warning"></i>
                   </span>
                 </div>
               </FormSection>
@@ -138,8 +138,12 @@ let FormContainer = styled.div`
     }
   }
 
-  @media screen and (max-width: 800px) {
-    width: 50%;
+  @media screen and (max-width: 750px) {
+    width: 90%;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 0.25rem;
   }
 
   .formTitle {
