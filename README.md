@@ -1,2 +1,2 @@
-# Blog_Website
+# Blog_WebApp
 Mern stack application.
