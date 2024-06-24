@@ -113,7 +113,7 @@ const UserProfile = () => {
             </span>
             <span className="text-light">
               <i className="bi bi-info-circle text-secondary"></i>{" "}
-              {user.usertagline.trim() ? (
+              {user.usertagline ? (
                 user.usertagline
               ) : (
                 <span className="text-secondary">Add tagline</span>
@@ -121,7 +121,7 @@ const UserProfile = () => {
             </span>
             <span className="text-light">
               <i className="bi bi-geo-alt text-secondary"></i>{" "}
-              {user.userlocation.trim() ? (
+              {user.userlocation ? (
                 user.userlocation
               ) : (
                 <span className="text-secondary">Add location</span>
@@ -154,7 +154,7 @@ const UserProfile = () => {
             <span className="text-white">
               <span className="text-secondary">Active since:</span>{" "}
               {user.createdAt
-                ? moment(user.createdAt).format("MMM Do YY")
+                ? moment(user.createdAt).format("MMM Do YYYY")
                 : "-- -- ----"}
             </span>
             <span
@@ -217,7 +217,7 @@ const UserProfile = () => {
                   type="text"
                   className="form-control p-3 my-1"
                   placeholder="Enter the tageline.."
-                  value={userTagline}
+                  value={userTagline ? userTagline : ""}
                   onChange={(e) => setUserTagline(e.target.value)}
                   style={{
                     outline: "none",
@@ -229,7 +229,7 @@ const UserProfile = () => {
                   type="text"
                   className="form-control p-3 my-1"
                   placeholder="Enter your location..."
-                  value={userLocation}
+                  value={userLocation ? userLocation : ""}
                   onChange={(e) => setUserLocation(e.target.value)}
                   style={{
                     outline: "none",

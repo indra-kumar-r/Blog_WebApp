@@ -1,5 +1,6 @@
 let { Router } = require("express");
 let controller = require("../controllers/controllers");
+let admin_controller = require("../controllers/admin");
 
 let router = Router();
 
@@ -25,5 +26,14 @@ router.get(`/likepost`, controller.g_like);
 router.delete("/likepost", controller.d_like);
 
 router.put("/resetpassword", controller.u_pwd);
+
+// Admin routers
+
+router.get("/get_users", admin_controller.get_users);
+router.get("/get_posts", admin_controller.get_posts);
+
+router.put("/update_postStatus/:id/:postStatus", admin_controller.post_status);
+
+router.delete("/del_post/:id", admin_controller.del_post);
 
 module.exports = router;

@@ -53,7 +53,6 @@ const EditPost = () => {
     });
     if (response.ok) {
       toast.success("Post Updated Successfully");
-      navigate(-1);
     } else {
       toast.error("Failed updating the Post");
     }
@@ -65,8 +64,8 @@ const EditPost = () => {
         method: "DELETE",
       });
       if (response.ok) {
+        navigate(-2);
         toast.success("Post Deleted successfully.");
-        navigate(-1);
       } else {
         throw new Error("Failed deleting the Post.");
       }
@@ -88,7 +87,7 @@ const EditPost = () => {
 
   return (
     <>
-      {title ? (
+      {postInfo ? (
         <Form onSubmit={updatePost}>
           <div className="formBtns d-flex justify-content-between">
             <GoBackBtn />
@@ -234,7 +233,7 @@ const Form = styled.form`
       min-width: 100%;
       min-height: 15rem;
       max-height: 15rem;
-      object-fit: fill;
+      object-fit: cover;
     }
   }
 

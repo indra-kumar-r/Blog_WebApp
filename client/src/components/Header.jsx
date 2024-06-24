@@ -21,15 +21,23 @@ const Header = () => {
 
   const beforeLogin = [
     { label: "Home", value: "/" },
+    { label: "Login", value: "/login" },
+    { label: "Register", value: "/register" },
+  ];
+
+  const afterLogin = [
+    { label: "Home", value: "/" },
     { label: "Create", value: "/create" },
     { label: "Posts", value: "/posts" },
     { label: <Profile />, value: "#" },
   ];
 
-  const afterLogin = [
-    { label: "Home", value: "/" },
-    { label: "Login", value: "/login" },
-    { label: "Register", value: "/register" },
+  const adminLogin = [
+    { label: "Users", value: "/admin/users" },
+    { label: "Posts", value: "/admin/posts" },
+    { label: "Activity", value: "/admin/activity" },
+    { label: "Settings", value: "/admin/settings" },
+    { label: <Profile />, value: "#" },
   ];
 
   return (
@@ -42,7 +50,15 @@ const Header = () => {
           </NavLink>
         </div>
         <div className="navbar">
-          {username ? <Nav props={beforeLogin} /> : <Nav props={afterLogin} />}
+          {username ? (
+            username === "ADMIN" ? (
+              <Nav props={adminLogin} />
+            ) : (
+              <Nav props={afterLogin} />
+            )
+          ) : (
+            <Nav props={beforeLogin} />
+          )}
         </div>
       </div>
     </Main>

@@ -43,6 +43,7 @@ const CreatePost = () => {
             setTimeout(() => {
               resolve(responseData.message);
               resetFun();
+              navigate("/posts");
             }, 2000);
           }),
           {

@@ -37,6 +37,9 @@ const LoginPage = () => {
   }
 
   if (redirect) {
+    if (username === "ADMIN") {
+      return <Navigate to={"/admin"} />;
+    }
     return <Navigate to={"/"} />;
   }
 

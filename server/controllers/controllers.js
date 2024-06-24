@@ -128,7 +128,7 @@ module.exports.p_post = async (req, res) => {
 
 module.exports.g_post = async (req, res) => {
   try {
-    const posts = await Posts.find()
+    const posts = await Posts.find({ hidden: "true" })
       .populate("author", ["username"])
       .sort({ updatedAt: -1 })
       .limit(20);

@@ -13,6 +13,11 @@ import UserProfile from "./components/UserProfile";
 import NotFound from "./components/NotFound";
 import { useEffect } from "react";
 import ViewProfile from "./components/ViewProfile";
+import Admin from "./components/Admin";
+import Admin_Users from "./components/subComponents/Admin_Users";
+import Admin_Posts from "./components/subComponents/Admin_Posts";
+import Admin_Activity from "./components/subComponents/Admin_Activity";
+import Admin_Settings from "./components/subComponents/Admin_Settings";
 
 function App() {
   const navigate = useNavigate();
@@ -35,6 +40,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
+            <Route path={"/admin"} element={<Admin />} />
+            <Route path={"/admin/users"} element={<Admin_Users />} />
+            <Route path={"/admin/posts"} element={<Admin_Posts />} />
+            <Route path={"/admin/activity"} element={<Admin_Activity />} />
+            <Route path={"/admin/settings"} element={<Admin_Settings />} />
             <Route path={"/login"} element={<LoginPage />} />
             <Route path={"/register"} element={<RegisterPage />} />
             <Route path={"/create"} element={<CreatePost />} />

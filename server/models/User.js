@@ -19,6 +19,7 @@ const UserSchema = new Schema(
     userfollowers: { type: Number, default: 0 },
     userliked: { type: Number, default: 0 },
     usersaved: { type: Number, default: 0 },
+    role: { type: String, default: "user" },
   },
   {
     timestamps: true,

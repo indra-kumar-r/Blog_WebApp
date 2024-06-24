@@ -59,7 +59,7 @@ const UserPosts = () => {
             appear here.
           </div>
           <Link to={"/create"} className="fw-bold text-primary">
-            <GlowFont text={"Click here to create."} font={2} custom={0.25} />
+            <GlowFont text={"Click here to create."} font={1.5} custom={0.1} />
           </Link>
         </PostCards>
       ) : (
