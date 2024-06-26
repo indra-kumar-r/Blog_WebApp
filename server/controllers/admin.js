@@ -52,3 +52,14 @@ module.exports.del_post = async (req, res) => {
     res.status(400).json(error);
   }
 };
+
+module.exports.del_user = async (req, res) => {
+  try {
+    let { id } = req.params;
+    let data = await User.deleteOne({ _id: id });
+    await Posts.deleteMany({ author: id });
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};

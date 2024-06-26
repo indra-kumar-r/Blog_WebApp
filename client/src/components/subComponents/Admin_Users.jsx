@@ -1,11 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Spinner from "./../utilities/Spinner";
 import GlowFont from "../utilities/GlowFont";
+import { UserContext } from "../UserContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Admin_Users = () => {
   let [usersData, setUsersData] = useState([]);
   let [loading, setLoading] = useState(true);
+  let { userInfo } = useContext(UserContext);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo === null || Object.keys(userInfo).length === 0) {
+      navigate("/login");
+    }
+  }, [userInfo, navigate]);
 
   useEffect(() => {
     fetch("http://localhost:9000/get_users")
@@ -19,6 +30,27 @@ const Admin_Users = () => {
         setLoading(false);
       });
   }, []);
+
+  const deleteUser = async (id) => {
+    if (confirm("Do you want to delete this user?")) {
+      try {
+        const response = await fetch(`http://localhost:9000/del_user/${id}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          setUsersData(usersData.filter((user) => user._id !== id));
+          toast.success("User Deleted successfully.");
+        } else {
+          throw new Error("Failed deleting the User.");
+        }
+      } catch (error) {
+        console.log("Failed deleting the User:", error.message);
+        toast.error("Failed deleting the User.");
+      }
+    }
+  };
+
+  console.log(usersData);
 
   return (
     <Main>
@@ -47,8 +79,9 @@ const Admin_Users = () => {
               <div
                 title="EDIT"
                 className="btn btn-outline-dark d-flex justify-content-center align-items-center gap-2"
+                onClick={() => deleteUser(item._id)}
               >
-                <i className="bi bi-pencil-square"></i>
+                <i className="bi bi-trash3"></i>
               </div>
             </div>
           ))}

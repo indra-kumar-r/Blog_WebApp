@@ -35,8 +35,8 @@ const Header = () => {
   const adminLogin = [
     { label: "Users", value: "/admin/users" },
     { label: "Posts", value: "/admin/posts" },
-    { label: "Activity", value: "/admin/activity" },
-    { label: "Settings", value: "/admin/settings" },
+    // { label: "Activity", value: "/admin/activity" },
+    // { label: "Settings", value: "/admin/settings" },
     { label: <Profile />, value: "#" },
   ];
 

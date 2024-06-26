@@ -36,4 +36,6 @@ router.put("/update_postStatus/:id/:postStatus", admin_controller.post_status);
 
 router.delete("/del_post/:id", admin_controller.del_post);
 
+router.delete("/del_user/:id", admin_controller.del_user);
+
 module.exports = router;

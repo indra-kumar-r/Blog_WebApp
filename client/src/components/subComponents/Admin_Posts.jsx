@@ -1,13 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Spinner from "./../utilities/Spinner";
 import toast from "react-hot-toast";
 import GlowFont from "./../utilities/GlowFont";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 const Admin_Posts = () => {
   const [postsData, setPostsData] = useState([]);
   const [loading, setLoading] = useState(true);
+  let { userInfo } = useContext(UserContext);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo === null || Object.keys(userInfo).length === 0) {
+      navigate("/login");
+    }
+  }, [userInfo, navigate]);
 
   useEffect(() => {
     fetch("http://localhost:9000/get_posts")
@@ -21,25 +30,6 @@ const Admin_Posts = () => {
         setLoading(false);
       });
   }, []);
-
-  const deletePost = async (id) => {
-    if (confirm("Do you want to delete this post?")) {
-      try {
-        const response = await fetch(`http://localhost:9000/del_post/${id}`, {
-          method: "DELETE",
-        });
-        if (response.ok) {
-          setPostsData(postsData.filter((post) => post._id !== id));
-          toast.success("Post Deleted successfully.");
-        } else {
-          throw new Error("Failed deleting the Post.");
-        }
-      } catch (error) {
-        console.log("Failed deleting the Post:", error.message);
-        toast.error("Failed deleting the Post.");
-      }
-    }
-  };
 
   const togglePostStatus = async (id, currentStatus) => {
     const newStatus = !currentStatus;
@@ -63,6 +53,25 @@ const Admin_Posts = () => {
     } catch (error) {
       console.log("Failed to update post status:", error.message);
       toast.error("Failed to update post status.");
+    }
+  };
+
+  const deletePost = async (id) => {
+    if (confirm("Do you want to delete this post?")) {
+      try {
+        const response = await fetch(`http://localhost:9000/del_post/${id}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          setPostsData(postsData.filter((post) => post._id !== id));
+          toast.success("Post Deleted successfully.");
+        } else {
+          throw new Error("Failed deleting the Post.");
+        }
+      } catch (error) {
+        console.log("Failed deleting the Post:", error.message);
+        toast.error("Failed deleting the Post.");
+      }
     }
   };
 

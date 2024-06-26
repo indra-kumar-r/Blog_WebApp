@@ -39,17 +39,17 @@ const PostPage = () => {
             <h3>{postInfo.title}</h3>
             <span className="text-secondary">
               <h4>
-                <Link
+                {/* <Link
                   to={`/user/${postInfo.author.username}`}
                   className="text-text-decoration-none d-flex gap-1"
                 >
                   <i className="bi bi-arrow-up-right-circle fs-6"></i>
-                  <GlowFont
-                    text={postInfo.author.username}
-                    font={1}
-                    custom={0.05}
-                  />
-                </Link>
+                </Link> */}
+                <GlowFont
+                  text={postInfo.author.username}
+                  font={1}
+                  custom={0.05}
+                />
               </h4>
               <h5 className="ms-2">
                 {format(new Date(postInfo.updatedAt), "MMM dd, yyyy")}
